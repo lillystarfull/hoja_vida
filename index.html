@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hoja de Vida — Desarrolladora de Software Senior</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@500;700;900&family=VT323&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg1: #0C3B45;
+    --bg2: #164f57;
+    --ink: #CFF0EA;
+    --muted: #88C9C4;
+    --pink: #88C9C4;
+    --cyan: #CFF0EA;
+    --yellow: #CFF0EA;
+    --purple: #3E9B94;
+    --card: rgba(255,255,255,.045);
+    --page-w: 210mm;
+    --page-h: 297mm;
+    --margin: 14mm;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: #06242b; }
+  body {
+    font-family: "Inter", "Segoe UI", Arial, sans-serif;
+    font-size: 9.3pt;
+    line-height: 1.42;
+    color: var(--ink);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* ---------- Hoja A4 ---------- */
+  .page {
+    width: var(--page-w);
+    height: var(--page-h);
+    margin: 10mm auto;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background:
+      radial-gradient(ellipse at 85% 0%, rgba(136,201,196,.18), transparent 55%),
+      radial-gradient(ellipse at 0% 100%, rgba(207,240,234,.12), transparent 55%),
+      linear-gradient(180deg, var(--bg1), var(--bg2));
+    box-shadow: 0 0 0 1px rgba(62,155,148,.5), 0 0 40px rgba(136,201,196,.35);
+  }
+  /* Efecto CRT: líneas de trama + viñeta */
+  .page::after {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    z-index: 5;
+    background:
+      repeating-linear-gradient(to bottom, rgba(0,0,0,.14) 0 1px, transparent 1px 3px),
+      radial-gradient(ellipse at center, transparent 62%, rgba(0,0,0,.35) 100%);
+  }
+  .page-body { padding: 0 var(--margin) 0; flex: 1; min-height: 0; overflow: hidden; position: relative; z-index: 2; }
+  .page-body.pad-top { padding-top: var(--margin); }
+
+  /* ---------- Hero (banner del README + escena synthwave) ---------- */
+  .hero {
+    position: relative;
+    height: 40mm;
+    overflow: hidden;
+    background: linear-gradient(180deg, #0C3B45 0%, #20666B 55%, #3E9B94 100%);
+    border-bottom: 2px solid var(--cyan);
+    box-shadow: 0 0 16px rgba(207,240,234,.6);
+  }
+  .sun {
+    position: absolute; left: 50%; bottom: 4mm;
+    width: 38mm; height: 38mm; transform: translateX(-50%);
+    border-radius: 50%;
+    background: linear-gradient(180deg, var(--yellow) 10%, #88C9C4 55%, #3E9B94 100%);
+    box-shadow: 0 0 24px rgba(136,201,196,.8);
+  }
+  .sun::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 55%;
+    background: repeating-linear-gradient(to bottom, transparent 0 4px, #20666B 4px 6px);
+    border-radius: 0 0 50% 50%;
+  }
+  .grid {
+    position: absolute; left: -60%; right: -60%; bottom: -14mm; height: 26mm;
+    background-image:
+      linear-gradient(rgba(207,240,234,.85) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(207,240,234,.85) 1px, transparent 1px);
+    background-size: 9mm 5mm;
+    transform: perspective(90px) rotateX(58deg);
+    transform-origin: center top;
+    background-color: rgba(12,59,69,.9);
+  }
+  .hero img.banner {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; z-index: 1;
+  }
+  .hero::after { /* degradado para fundir con el contenido */
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 10mm; z-index: 2;
+    background: linear-gradient(180deg, transparent, rgba(12,59,69,.55));
+  }
+
+  /* ---------- Encabezado ---------- */
+  header.top { padding: 5mm var(--margin) 0; position: relative; z-index: 3; }
+  h1 {
+    font-family: "Orbitron", sans-serif;
+    font-weight: 900;
+    font-size: 24pt;
+    line-height: 1.05;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 0 6px var(--pink), 0 0 18px var(--pink), 3px 3px 0 var(--purple);
+  }
+  .role {
+    font-family: "VT323", monospace;
+    font-size: 16pt;
+    color: var(--cyan);
+    letter-spacing: 1.5px;
+    margin-top: 1mm;
+    text-shadow: 0 0 8px rgba(207,240,234,.8);
+  }
+  .role::before { content: "> "; color: var(--yellow); }
+  .role::after { content: "_"; color: var(--yellow); animation: blink 1s steps(2) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .contact {
+    margin-top: 3mm;
+    display: flex; flex-wrap: wrap; gap: 1mm 6mm;
+    font-size: 8.8pt; color: var(--ink);
+  }
+  .contact b {
+    font-family: "VT323", monospace; font-weight: 400; font-size: 11pt;
+    color: var(--pink); margin-right: 1.5mm; letter-spacing: 1px;
+  }
+
+  .links { margin-top: 3.5mm; display: flex; flex-wrap: wrap; align-items: center; gap: 2mm 3.5mm; }
+  .links a { display: inline-flex; text-decoration: none; }
+  .links img { height: 22px; display: block; border-radius: 3px; box-shadow: 0 0 8px rgba(207,240,234,.45); }
+  .cv-link {
+    margin-left: auto;
+    font-size: 8.4pt; color: var(--ink);
+    border: 1px dashed var(--yellow);
+    border-radius: 2px; padding: .9mm 3mm;
+    background: rgba(136,201,196,.07);
+  }
+  .cv-link b { font-family: "VT323", monospace; font-weight: 400; font-size: 11pt; color: var(--yellow); margin-right: 1.5mm; }
+  .cv-link a { color: #fff; text-decoration: underline; text-decoration-color: var(--cyan); }
+  .placeholder { opacity: .8; font-style: italic; }
+
+  /* ---------- Secciones ---------- */
+  section { margin-top: 5.5mm; }
+  h2 {
+    font-family: "Orbitron", sans-serif;
+    font-weight: 700;
+    font-size: 10.6pt;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--cyan);
+    text-shadow: 0 0 8px rgba(207,240,234,.8);
+    padding-bottom: 1.4mm;
+    margin-bottom: 3mm;
+    display: flex; align-items: center; gap: 2.5mm;
+    border-bottom: 1px solid transparent;
+    border-image: linear-gradient(90deg, var(--pink), var(--purple) 50%, transparent) 1;
+  }
+  h2::before { content: "//"; color: var(--pink); text-shadow: 0 0 8px var(--pink); font-family: "VT323", monospace; font-size: 14pt; }
+  h2 small { font-family: "VT323", monospace; font-size: 11pt; letter-spacing: 1px; color: var(--muted); text-shadow: none; margin-left: auto; font-weight: 400; }
+
+  p.profile { text-align: justify; hyphens: auto; }
+  b { color: #fff; }
+  p.profile b { color: var(--yellow); }
+
+  .card {
+    background: var(--card);
+    border: 1px solid rgba(62,155,148,.55);
+    border-left: 3px solid var(--pink);
+    padding: 3mm 4mm;
+    margin-bottom: 3.5mm;
+    box-shadow: inset 0 0 18px rgba(62,155,148,.08), 0 0 10px rgba(136,201,196,.12);
+  }
+  .card:last-child { margin-bottom: 0; }
+  .job-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; }
+  .job h3 { font-size: 10pt; font-weight: 700; color: #fff; }
+  .where { color: var(--cyan); font-weight: 600; font-size: 9pt; }
+  .when { font-family: "VT323", monospace; font-size: 12pt; color: var(--yellow); white-space: nowrap; letter-spacing: .5px; }
+  ul { margin: 1.8mm 0 0 4mm; }
+  li { margin-bottom: 1.1mm; padding-left: 1mm; }
+  li::marker { color: var(--pink); content: "▸ "; }
+  code { font-family: "VT323", monospace; font-size: 11pt; color: var(--cyan); }
+
+  .edu-item { display: flex; justify-content: space-between; align-items: baseline; gap: 4mm; }
+  .edu-item h3 { font-size: 10pt; color: #fff; }
+  .sub { color: var(--muted); }
+
+  /* ---------- Habilidades (badges originales) ---------- */
+  .hard {
+    border: 1px solid rgba(207,240,234,.5);
+    background: rgba(207,240,234,.05);
+    padding: 2.5mm 4mm; margin-bottom: 3.5mm;
+  }
+  .skill-group { margin-bottom: 3mm; }
+  .skill-group h4 {
+    font-family: "VT323", monospace; font-weight: 400;
+    font-size: 12pt; letter-spacing: 1.5px;
+    color: var(--pink); text-shadow: 0 0 6px rgba(136,201,196,.6);
+    text-transform: uppercase; margin-bottom: 1.2mm;
+  }
+  .badges { display: flex; flex-wrap: wrap; gap: 1.4mm; }
+  .badges img { height: 22px; display: block; box-shadow: 0 0 6px rgba(62,155,148,.55); }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 7mm; }
+  .tags { display: flex; flex-wrap: wrap; gap: 1.5mm; }
+  .tag {
+    border: 1px solid var(--purple); border-radius: 2px;
+    padding: .5mm 2.6mm; font-size: 8.5pt;
+    background: rgba(62,155,148,.14);
+  }
+  .lang { display: flex; justify-content: space-between; border-bottom: 1px dotted rgba(136,201,196,.5); padding: 1mm 0; }
+  .lang span:last-child { font-family: "VT323", monospace; font-size: 12pt; color: var(--cyan); }
+  .course { margin-bottom: 2.4mm; }
+  .course b { display: block; font-size: 9.2pt; }
+  .course span { color: var(--muted); font-size: 8.4pt; }
+
+  /* ---------- Estadísticas de GitHub (imágenes del README) ---------- */
+  .stats { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2mm; }
+  .stats img { height: 92px; display: block; border-radius: 4px; }
+  .visits { text-align: center; margin-top: 2.2mm; }
+  .visits img { height: 20px; }
+
+  /* Pie */
+  footer.foot {
+    position: relative; z-index: 3;
+    padding: 3mm var(--margin);
+    font-family: "VT323", monospace; font-size: 11.5pt; letter-spacing: 1px;
+    color: var(--muted);
+    display: flex; justify-content: space-between;
+    border-top: 1px solid rgba(136,201,196,.6);
+    box-shadow: 0 -4px 14px rgba(136,201,196,.2);
+  }
+
+  /* Barra de pantalla */
+  .toolbar { position: fixed; right: 16px; top: 16px; z-index: 20; }
+  .toolbar button {
+    font: 700 10pt "Orbitron", sans-serif; letter-spacing: 1px;
+    background: #0C3B45; color: var(--cyan);
+    border: 1px solid var(--cyan); border-radius: 3px;
+    padding: 9px 16px; cursor: pointer;
+    box-shadow: 0 0 12px rgba(207,240,234,.6);
+  }
+  .toolbar button:hover { background: var(--cyan); color: #0C3B45; }
+
+  /* ---------- Impresión ---------- */
+  @page { size: A4; margin: 0; }
+  @media print {
+    html { background: var(--bg1); }
+    .page { margin: 0; box-shadow: none; break-after: page; page-break-after: always; }
+    .page:last-of-type { break-after: auto; page-break-after: auto; }
+    .toolbar { display: none; }
+    .role::after { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar"><button onclick="window.print()">IMPRIMIR / PDF</button></div>
+
+<!-- ======================= PÁGINA 1 ======================= -->
+<div class="page">
+  <div class="hero">
+    <div class="sun"></div>
+    <div class="grid"></div>
+    <!-- Banner original del README: colócalo en assets/banner.png junto a este archivo -->
+    <img class="banner" src="assets/banner.png" alt="Banner de Linux, Ubuntu, Raspberry Pi, Debian y openSUSE" onerror="this.style.display='none'">
+  </div>
+
+  <header class="top">
+    <h1 data-cfg="name">Nombre Apellido</h1>
+    <div class="role">Desarrolladora de Software Senior · Consultora Full-Stack</div>
+
+    <div class="contact">
+      <span><b>LOC</b><span data-cfg="location">Medellín, Colombia</span></span>
+      <span><b>MAIL</b><span data-cfg="email">tu-correo@ejemplo.com</span></span>
+      <span><b>TEL</b><span data-cfg="phone">+57 000 000 0000</span></span>
+      <span><b>GIT</b><span data-cfg="github">github.com/lillystarfull</span></span>
+    </div>
+
+    <div class="links">
+      <a id="lnk-linkedin" href="#" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn">
+      </a>
+      <a id="lnk-youtube" href="#" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/badge/YouTube-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="YouTube">
+      </a>
+      <a id="lnk-gitlab" href="#" target="_blank" rel="noopener">
+        <img src="https://img.shields.io/badge/GitLab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white" alt="GitLab">
+      </a>
+      <div class="cv-link"><b>CV.LINK</b><a id="lnk-cv" href="#" target="_blank" rel="noopener"></a></div>
+    </div>
+  </header>
+
+  <div class="page-body">
+    <section>
+      <h2>Perfil profesional <small>PERFIL.SYS</small></h2>
+      <p class="profile">
+        Desarrolladora de software senior e ingeniera de sistemas con experiencia diseñando e implementando sistemas web integrales
+        de extremo a extremo, desde el modelado de datos y las API RESTful hasta la interfaz de usuario. Trabajo con
+        <b>Django, FastAPI y PostgreSQL</b>, optimizo consultas SQL, procedimientos almacenados y triggers, y automatizo procesos
+        con <b>IA local (Ollama, n8n y agentes interactivos)</b>. Aplico metodologías ágiles de ingeniería (SDD, TDD, BDD y ODD)
+        para garantizar mantenibilidad, escalabilidad y calidad. Cuento además con trayectoria como instructora y mentora técnica,
+        con una comunicación clara y orientada a resultados. Usuaria y promotora de Linux y el software libre.
+      </p>
+    </section>
+
+    <section>
+      <h2>Experiencia laboral <small>EXPERIENCIA.EXE</small></h2>
+
+      <div class="card job">
+        <div class="job-head">
+          <h3>Desarrolladora de Software Senior / Consultora Full-Stack</h3>
+          <span class="when">ENE 2023 – PRESENTE</span>
+        </div>
+        <div class="job-head">
+          <span class="where">Independiente / Proyectos de Software</span>
+          <span class="sub">Medellín, Colombia</span>
+        </div>
+        <ul>
+          <li>Liderazgo en el diseño e implementación de sistemas web integrales como <b>ZYAFOOD</b> (gestión de excedentes alimentarios) y módulos <b>CRM (DCRM)</b>, con Django, FastAPI y PostgreSQL.</li>
+          <li>Arquitectura e integración de API RESTful, optimización de consultas SQL, procedimientos almacenados y triggers para un rendimiento óptimo en la gestión de datos.</li>
+          <li>Implementación de flujos de automatización e IA local (Ollama, n8n, agentes interactivos) para optimizar tareas operativas e integración de datos.</li>
+          <li>Aplicación de metodologías ágiles de ingeniería de software (SDD, TDD, BDD y ODD) para asegurar mantenibilidad, escalabilidad y calidad del código.</li>
+        </ul>
+      </div>
+
+      <div class="card job">
+        <div class="job-head">
+          <h3>Instructora y Especialista en Análisis y Desarrollo de Software</h3>
+          <span class="when">ENE 2020 – DIC 2022</span>
+        </div>
+        <div class="job-head">
+          <span class="where">Sector Educativo / Tecnológico</span>
+          <span class="sub">Medellín, Colombia</span>
+        </div>
+        <ul>
+          <li>Formación y mentoría técnica a aprendices y profesionales en programación estructurada, orientada a objetos, bases de datos y arquitectura de software.</li>
+          <li>Elaboración de material educativo técnico y repositorios de libre acceso (<code>ApiRES</code>, <code>TutorialPython</code>, <code>ExportacionPDF</code>, <code>EjemploCrudPhp</code>) orientados a mejores prácticas.</li>
+          <li>Implementación de entornos de prueba e integración continua con Git, GitHub, Docker y Postman.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Educación <small>EDU.DAT</small></h2>
+      <div class="card">
+        <div class="edu-item">
+          <div>
+            <h3>Ingeniería de Sistemas</h3>
+            <div class="sub" data-cfg="university">Universidad / Institución Educativa</div>
+          </div>
+          <span class="when" data-cfg="gradYear">[Año de graduación]</span>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer class="foot">
+    <span data-cfg="name">Nombre Apellido</span>
+    <span>PAG 01/02</span>
+  </footer>
+</div>
+
+<!-- ======================= PÁGINA 2 ======================= -->
+<div class="page">
+  <div class="page-body pad-top">
+
+    <section style="margin-top:0">
+      <h2>Habilidades técnicas <small>SKILLS.BIN</small></h2>
+
+      <div class="hard">
+        <b>Habilidades duras:</b> Desarrollo Full-Stack (Backend y Frontend), arquitectura de API RESTful, modelado de bases de datos
+        relacionales y NoSQL, integración de IA y agentes, gestión de contenedores con Docker, control de versiones avanzado,
+        análisis y visualización de datos.
+      </div>
+
+      <div class="skill-group">
+        <h4>Lenguajes de programación</h4>
+        <div class="badges">
+          <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+          <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript">
+          <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+          <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
+          <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java">
+          <img src="https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=c-sharp&logoColor=white" alt="C#">
+          <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5">
+          <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3">
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h4>Frameworks y librerías web</h4>
+        <div class="badges">
+          <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white" alt="Django">
+          <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI">
+          <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask">
+          <img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
+          <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React">
+          <img src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vuedotjs&logoColor=4FC08D" alt="Vue.js">
+          <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind CSS">
+          <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white" alt="Bootstrap">
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h4>Bases de datos</h4>
+        <div class="badges">
+          <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
+          <img src="https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL">
+          <img src="https://img.shields.io/badge/MariaDB-003545?style=for-the-badge&logo=mariadb&logoColor=white" alt="MariaDB">
+          <img src="https://img.shields.io/badge/SQL_Server-CC292B?style=for-the-badge&logo=microsoftsqlserver&logoColor=white" alt="SQL Server">
+          <img src="https://img.shields.io/badge/SQLite-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite">
+          <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white" alt="MongoDB">
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h4>Ciencia de datos, IA y automatización</h4>
+        <div class="badges">
+          <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas">
+          <img src="https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white" alt="NumPy">
+          <img src="https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white" alt="scikit-learn">
+          <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white" alt="OpenCV">
+          <img src="https://img.shields.io/badge/n8n-FF6D5A?style=for-the-badge&logo=n8n&logoColor=white" alt="n8n">
+          <img src="https://img.shields.io/badge/Ollama-000000?style=for-the-badge&logo=ollama&logoColor=white" alt="Ollama">
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <h4>Herramientas, DevOps y entornos</h4>
+        <div class="badges">
+          <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
+          <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" alt="Git">
+          <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" alt="GitHub">
+          <img src="https://img.shields.io/badge/GitLab-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white" alt="GitLab">
+          <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white" alt="Postman">
+          <img src="https://img.shields.io/badge/VS_Code-007ACC?style=for-the-badge&logo=visual-studio-code&logoColor=white" alt="VS Code">
+          <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux">
+        </div>
+      </div>
+
+      <div class="skill-group" style="margin-bottom:0">
+        <h4>Linux &amp; Open Source</h4>
+        <div class="badges">
+          <img src="https://img.shields.io/badge/Linux-FCC624?style=for-the-badge&logo=linux&logoColor=black" alt="Linux">
+          <img src="https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white" alt="Ubuntu">
+          <img src="https://img.shields.io/badge/Raspberry%20Pi-A22846?style=for-the-badge&logo=raspberrypi&logoColor=white" alt="Raspberry Pi">
+          <img src="https://img.shields.io/badge/Debian-A81D33?style=for-the-badge&logo=debian&logoColor=white" alt="Debian">
+          <img src="https://img.shields.io/badge/openSUSE-73BA25?style=for-the-badge&logo=opensuse&logoColor=white" alt="openSUSE">
+        </div>
+      </div>
+    </section>
+
+    <div class="two-col">
+      <section>
+        <h2>Habilidades blandas <small>SOFT.CFG</small></h2>
+        <div class="tags">
+          <span class="tag">Análisis y resolución de problemas</span>
+          <span class="tag">Comunicación técnica efectiva</span>
+          <span class="tag">Liderazgo y mentoría</span>
+          <span class="tag">Adaptabilidad tecnológica</span>
+          <span class="tag">Trabajo en equipo</span>
+        </div>
+
+        <h2 style="margin-top:4.5mm">Idiomas <small>LANG.DAT</small></h2>
+        <div class="lang"><span>Español</span><span>NATIVO</span></div>
+        <div class="lang"><span>Inglés</span><span>B1 → B2</span></div>
+      </section>
+
+      <section>
+        <h2>Formación continua <small>LEARN.LOG</small></h2>
+        <div class="course">
+          <b>Especialización en Inteligencia Artificial</b>
+          <span>Estud-IA / Google One AI · 2025 – 2026</span>
+        </div>
+        <div class="course">
+          <b>Desarrollo Web Full-Stack y Arquitectura Cloud</b>
+          <span>Formación profesional autónoma / certificaciones técnicas</span>
+        </div>
+        <div class="course">
+          <b>Lengua inglesa y comunicación profesional</b>
+          <span>Duolingo / programas de inmersión</span>
+        </div>
+      </section>
+    </div>
+
+    <section>
+      <h2>Estadísticas de GitHub <small>GITHUB.STATS</small></h2>
+      <div class="stats">
+        <img src="https://github-readme-stats.vercel.app/api?username=lillystarfull&show_icons=true&include_all_commits=true&theme=tokyonight&hide_border=true&locale=es" alt="Estadísticas de GitHub" onerror="this.style.display='none'">
+        <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=lillystarfull&layout=compact&theme=tokyonight&hide_border=true&locale=es" alt="Lenguajes más utilizados" onerror="this.style.display='none'">
+        <img src="https://github-readme-streak-stats.herokuapp.com/?user=lillystarfull&theme=tokyonight&hide_border=true&locale=es" alt="Racha de contribuciones" onerror="this.style.display='none'">
+      </div>
+      <div class="visits">
+        <img src="https://komarev.com/ghpvc/?username=lillystarfull&style=for-the-badge&color=blueviolet" alt="Visitas al perfil de GitHub" onerror="this.style.display='none'">
+      </div>
+    </section>
+  </div>
+
+  <footer class="foot">
+    <span data-cfg="name">Nombre Apellido</span>
+    <span>PAG 02/02</span>
+  </footer>
+</div>
+
+<script>
+  /* ============================================================
+     CONFIGURACIÓN — edita solo este bloque con tus datos reales.
+     ============================================================ */
+  const CONFIG = {
+    name: "Nombre Apellido",
+    location: "Medellín, Colombia",
+    email: "tu-correo@ejemplo.com",
+    phone: "+57 000 000 0000",
+    github: "github.com/lillystarfull",
+    university: "Universidad / Institución Educativa",
+    gradYear: "[Año de graduación]",
+
+    linkedin: "",   // ej. "https://www.linkedin.com/in/tu-usuario"
+    youtube:  "",   // ej. "https://www.youtube.com/@tu-canal"
+    gitlab:   "",   // ej. "https://gitlab.com/tu-usuario"
+    cv:       ""    // ej. "https://tu-sitio.com/curriculum.pdf"
+  };
+
+  document.querySelectorAll("[data-cfg]").forEach(el => {
+    const v = CONFIG[el.dataset.cfg];
+    if (v) el.textContent = v;
+  });
+  if (CONFIG.name && CONFIG.name !== "Nombre Apellido") {
+    document.title = "Hoja de Vida — " + CONFIG.name;
+  }
+
+  [["linkedin","lnk-linkedin"],["youtube","lnk-youtube"],["gitlab","lnk-gitlab"]].forEach(([key,id]) => {
+    const a = document.getElementById(id);
+    if (CONFIG[key]) a.href = CONFIG[key];
+    else { a.removeAttribute("href"); a.style.cursor = "default"; }
+  });
+
+  const cv = document.getElementById("lnk-cv");
+  if (CONFIG.cv) {
+    cv.href = CONFIG.cv;
+    cv.textContent = CONFIG.cv.replace(/^https?:\/\//, "");
+  } else {
+    cv.removeAttribute("href");
+    cv.textContent = "[ pega aquí el enlace a tu currículum ]";
+    cv.classList.add("placeholder");
+    cv.style.textDecoration = "none";
+  }
+
+  /* Ajuste automático: si el contenido de una página excede el A4
+     (por ejemplo al cargar las imágenes), reduce ligeramente la escala. */
+  function fitPages() {
+    document.querySelectorAll(".page-body").forEach(body => {
+      let z = 1;
+      body.style.zoom = 1;
+      while (body.scrollHeight > body.clientHeight + 1 && z > 0.75) {
+        z -= 0.02;
+        body.style.zoom = z.toFixed(2);
+      }
+    });
+  }
+  window.addEventListener("load", () => {
+    fitPages();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitPages);
+  });
+  window.addEventListener("beforeprint", fitPages);
+</script>
+</body>
+</html>
